@@ -1,0 +1,67 @@
+﻿@model PI_Project.Models.PartLocationViewModel
+@{
+    ViewData["Title"] = "List of available spare parts";
+}
+
+<h1>List of available spare parts</h1>
+
+<p style="border-bottom: none;">
+    <a asp-action="Create"><button class="btn btn-primary">Create New</button></a>
+</p>
+
+<form asp-controller="Parts" asp-action="Index" method="get">
+    <p>
+        Part location:
+        <select asp-for="PartLocation" asp-items="Model.Locations">
+            <option value="">All</option>
+        </select>
+
+        Part name: <input type="text" asp-for="SearchString"/>
+        <input type="submit" value="Filter"/>
+    </p>
+</form>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Parts[0].Part_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Parts[0].Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Parts[0].Part_desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Parts[0].Part_loc)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Parts) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Part_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Part_desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Part_loc)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
